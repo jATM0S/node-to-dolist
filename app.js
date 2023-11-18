@@ -1,6 +1,8 @@
 const express = require("express");
+
 const app = express();
 
+const router = require("./router");
 app.use("/todo/", router);
 
-app.listen(3000);
+module.exports=app;
