@@ -10,13 +10,13 @@
     "completed": true
   },
   "3": {
-    "task": "Call mom",
-    "description": "",
+    "task": "drink wotah",
+    "description": "drink 69 glasses of wotah",
     "completed": false
   },
   "4": {
-    "task": "Call mom",
+    "task": "call mom",
     "description": "",
-    "completed": false
+    "completed": true
   }
 }
