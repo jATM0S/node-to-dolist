@@ -28,7 +28,7 @@ app.post("/", (req, res) => {
     //stringfying the tobe added todo then writing the whole todo to json so that the todo added to "todos" is also added
     const addTodo = JSON.stringify(todos, null, 2);
     fs.writeFileSync("./todo.json", addTodo);
-    console.log(todos[newId]);
+    console.log(todos);
     res.status(200).send("success");
   } catch {
     res.status(400).send("error");
@@ -45,7 +45,7 @@ app.delete("/", (req, res) => {
     };
 
     getTaskIds();
-    console.log(taskIDs);
+    console.log(todos);
     
     let taskExist = false;
     for (let i = 1; i < taskIDs.length; i++) {
@@ -70,7 +70,6 @@ app.delete("/", (req, res) => {
       //getting the updated todos
       getTaskIds();
       console.log(todos);
-      console.log(taskIDs);
       //sending feedback 
       res.status(200).send(`Deleted todo no ${id}`);
     } else {
@@ -117,6 +116,7 @@ app.patch("/", (req, res) => {
       //writing the modified todo after deleting in json file
       const updateTodo = JSON.stringify(todos, null, 2);
       fs.writeFileSync("./todo.json", updateTodo);
+      console.log(todos);
       res.status(200).send(`sucessfully updated todo ${id}`);
     } else {
       res.status(400).send("error");
