@@ -10,7 +10,7 @@ module.exports.updateTodos = (req, res) => {
       console.log(result.todos);
       res.status(200).json(result.todos);
     } else {
-      res.status(400).send("Error");
+      res.status(400).send("id doesn't exists");
     }
   } catch (error) {
     console.log("Error:", error);
@@ -31,7 +31,7 @@ module.exports.deleteTodos = (req, res) => {
       //sending feedback
       res.status(200).json(result.todos);
     } else {
-      console.log(todos);
+      console.log(result.todos);
       res.status(400).send("number doesnt exist");
     }
   } catch (error) {
@@ -50,6 +50,7 @@ module.exports.getTodos = (req, res) => {
     res.status(400).send("Error Occured");
   }
 };
+
 module.exports.postTodos = (req, res) => {
   try {
     const todos = model.putTodos(req); // Pass req object here
