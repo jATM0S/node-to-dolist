@@ -1,10 +1,11 @@
 const fs = require("fs");
 const todos = JSON.parse(fs.readFileSync(`${__dirname}/todo.json`));
+const utils=require('./utils');
 
 module.exports.changeTodo = (req) => {
   const id = req.body.id;
   // getting the taskIDs by creating a funciton that stores the ids in a array in task id
-  let taskIDs = Object.keys(todos);
+  let taskIDs = utils.taskIDs();
 
   let taskExist = false;
   for (let i = 1; i < taskIDs.length; i++) {
@@ -34,7 +35,7 @@ module.exports.removeTodos = (req) => {
   const id = req.body.id;
   //getting the taskIDs by creating a funciton that stores the ids in a array in task id
 
-  const taskIDs = Object.keys(todos);
+  const taskIDs = utils.taskIDs();
   console.log(todos);
 
   let taskExist = false;
@@ -63,7 +64,7 @@ module.exports.findTodos = () => {
 
 module.exports.putTodos = (req) => {
   //taking the number of value of the todo
-  const taskIDs = Object.keys(todos);
+  const taskIDs = utils.taskIDs();
   const newId = taskIDs.length + 1;
 
   //adding todo to the newId

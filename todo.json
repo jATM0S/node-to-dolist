@@ -15,8 +15,8 @@
     "completed": true
   },
   "4": {
-    "task": "eat",
-    "description": "eat a lot more",
+    "task": "go to eat",
+    "description": "go eat",
     "completed": false
   }
 }

@@ -10,7 +10,7 @@ module.exports.updateTodos = (req, res) => {
       console.log(result.todos);
       res.status(200).json(result.todos);
     } else {
-      res.status(400).send("errorx");
+      res.status(400).send("Error");
     }
   } catch (error) {
     console.log("Error:", error);
