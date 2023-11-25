@@ -33,11 +33,11 @@ module.exports.changeTodo = (req) => {
 };
 module.exports.removeTodos = (req) => {
   const id = req.body.id;
-  //getting the taskIDs by creating a funciton that stores the ids in a array in task id
+  //getting the taskIDs from utils creating a funciton that stores the ids in a array in task id
 
-  const taskIDs = Object.keys(todos);
-  // console.log(todos);
+  const taskIDs = utils.taskIDs();
 
+  //checking if task exists
   let taskExist = false;
   for (let i = 1; i < taskIDs.length; i++) {
     if (id == taskIDs[i]) {
@@ -45,7 +45,7 @@ module.exports.removeTodos = (req) => {
     }
   }
 
-  //this checks if task exists then if it exists it deletes and prints the no of tasks present in the file
+  //If task  exists it deletes and shifts the ids 
   if (taskExist) {
     delete todos[id];
     //shifting the todo to the deleted todo and deleting last todo
@@ -53,7 +53,7 @@ module.exports.removeTodos = (req) => {
       let temp = todos[i + 1];
       todos[i] = temp;
     }
-    delete todos[taskIDs.length];
+    delete todos[taskIDs.length]; 
   }
   return { todos, taskExist };
 };
