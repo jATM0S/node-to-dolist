@@ -35,7 +35,7 @@ module.exports.removeTodos = (req) => {
   //getting the taskIDs by creating a funciton that stores the ids in a array in task id
 
   const taskIDs = Object.keys(todos);
-  console.log(todos);
+  // console.log(todos);
 
   let taskExist = false;
   for (let i = 1; i < taskIDs.length; i++) {
