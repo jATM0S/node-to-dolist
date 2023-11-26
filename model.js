@@ -1,46 +1,17 @@
 const fs = require("fs");
-const todos = JSON.parse(fs.readFileSync(`${__dirname}/todo.json`));
+let todos = JSON.parse(fs.readFileSync(`${__dirname}/todo.json`));
 const utils = require("./utils");
 
-module.exports.changeTodo = (req) => {
-  const id = req.body.id;
-  // getting the taskIDs by creating a funciton that stores the ids in a array in task id
-  let taskIDs = utils.taskIDs();
+module.exports.removeTodos = (req) => {
+  //after checking if task exists in the controller using utils then deleteTodo is called which deletes the task and shifts the ids
+  todos = utils.deleteTodo(req);
 
-
-  //this checks if task exists from utils then if it exists it changes the task
-  if (utils.checkTaskExist(req)) {
-    // let idBody=todos[id];
-    let changeBody = req.body.changes;
-    console.log(changeBody);
-    if (todos[id].task !== changeBody.task) {
-      todos[id].task = changeBody.task;
-    }
-    if (todos[id].description !== changeBody.description) {
-      todos[id].description = changeBody.description;
-    }
-    if (todos[id].completed !== changeBody.completed) {
-      todos[id].completed = changeBody.completed;
-    }
-  }
   return todos;
 };
-module.exports.removeTodos = (req) => {
-  const id = req.body.id;
-  //getting the taskIDs from utils creating a funciton that stores the ids in a array in task id
 
-  const taskIDs = utils.taskIDs();
-
-  //checking if task exists from utils If task  exists it deletes and shifts the ids
-  if (utils.checkTaskExist(req)) {
-    delete todos[id];
-    //shifting the todo to the deleted todo and deleting last todo
-    for (let i = id; i <= taskIDs.length; i++) {
-      let temp = todos[i + 1];
-      todos[i] = temp;
-    }
-    delete todos[taskIDs.length];
-  }
+module.exports.changeTodo = (req) => {
+  //after checking if task exist in the controller using utils then updateTodo is called which changes the task to get todo after updating
+  todos = utils.updateTodo(req);
   return todos;
 };
 
