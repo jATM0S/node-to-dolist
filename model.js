@@ -1,21 +1,15 @@
 const fs = require("fs");
 const todos = JSON.parse(fs.readFileSync(`${__dirname}/todo.json`));
-const utils=require('./utils');
+const utils = require("./utils");
 
 module.exports.changeTodo = (req) => {
   const id = req.body.id;
   // getting the taskIDs by creating a funciton that stores the ids in a array in task id
   let taskIDs = utils.taskIDs();
 
-  let taskExist = false;
-  for (let i = 1; i < taskIDs.length; i++) {
-    if (id == taskIDs[i]) {
-      taskExist = true;
-    }
-  }
 
-  //this checks if task exists then if it exists it changes the task
-  if (taskExist) {
+  //this checks if task exists from utils then if it exists it changes the task
+  if (utils.checkTaskExist(req)) {
     // let idBody=todos[id];
     let changeBody = req.body.changes;
     console.log(changeBody);
@@ -29,7 +23,7 @@ module.exports.changeTodo = (req) => {
       todos[id].completed = changeBody.completed;
     }
   }
-  return { todos, taskExist };
+  return todos;
 };
 module.exports.removeTodos = (req) => {
   const id = req.body.id;
@@ -37,25 +31,17 @@ module.exports.removeTodos = (req) => {
 
   const taskIDs = utils.taskIDs();
 
-  //checking if task exists
-  let taskExist = false;
-  for (let i = 1; i < taskIDs.length; i++) {
-    if (id == taskIDs[i]) {
-      taskExist = true;
-    }
-  }
-
-  //If task  exists it deletes and shifts the ids 
-  if (taskExist) {
+  //checking if task exists from utils If task  exists it deletes and shifts the ids
+  if (utils.checkTaskExist(req)) {
     delete todos[id];
     //shifting the todo to the deleted todo and deleting last todo
     for (let i = id; i <= taskIDs.length; i++) {
       let temp = todos[i + 1];
       todos[i] = temp;
     }
-    delete todos[taskIDs.length]; 
+    delete todos[taskIDs.length];
   }
-  return { todos, taskExist };
+  return todos;
 };
 
 module.exports.findTodos = () => {

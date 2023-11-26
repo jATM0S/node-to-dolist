@@ -1,14 +1,15 @@
 const fs = require("fs");
 const model = require("./model");
+const utils = require("./utils");
 
 module.exports.updateTodos = (req, res) => {
   try {
-    const result = model.changeTodo(req);
-    if (result.taskExist) {
+    const todos = model.changeTodo(req);
+    if (utils.checkTaskExist(req)) {
       //writing the modified todo after deleting in json file
-      fs.writeFileSync("./todo.json",JSON.stringify(result.todos, null, 2) );
-      console.log(result.todos);
-      res.status(200).json(result.todos);
+      fs.writeFileSync("./todo.json", JSON.stringify(todos, null, 2));
+      console.log(todos);
+      res.status(200).json(todos);
     } else {
       res.status(400).send("id doesn't exists");
     }
@@ -20,18 +21,18 @@ module.exports.updateTodos = (req, res) => {
 
 module.exports.deleteTodos = (req, res) => {
   try {
-    const result = model.removeTodos(req);
+    const todos = model.removeTodos(req);
 
-    if (result.taskExist) {
+    if (utils.checkTaskExist(req)) {
       //writing the modified todo after deleting in json file
-      fs.writeFileSync("./todo.json", JSON.stringify(result.todos, null, 2));
+      fs.writeFileSync("./todo.json", JSON.stringify(todos, null, 2));
 
       //getting the updated todos
-      console.log(result.todos);
+      console.log(todos);
       //sending feedback
-      res.status(200).json(result.todos);
+      res.status(200).json(todos);
     } else {
-      console.log(result.todos);
+      console.log(todos);
       res.status(400).send("number doesnt exist");
     }
   } catch (error) {
